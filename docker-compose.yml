@@ -1,0 +1,65 @@
+version: "3.3"
+services:
+
+    influxdb:
+        image: quay.io/influxdb/influxdb:2.0.0-beta
+        deploy:
+            replicas: 1
+        volumes:
+            - /volume1/influxdb/.influxdbv2:/root/.influxdbv2
+        ports:
+            - target: 9999
+              published: 9999
+              mode: host
+
+    stats:
+        image: softener_stats
+        deploy:
+            replicas: 1
+        configs:
+            - source: influxdb_url
+              target: /run/config/influxdb_url
+            - source: influxdb_org
+              target: /run/config/influxdb_org
+            - source: influxdb_bucket
+              target: /run/config/influxdb_bucket
+            - source: plug_host
+              target: /run/config/plug_host
+        secrets:
+            - influxdb_token
+
+    alerts:
+        image: softener_alerts
+        ports:
+            - target: 80
+              published: 9998
+              mode: host
+        deploy:
+            replicas: 1
+        configs:
+            - source: mail_from
+              target: /run/config/mail_from
+            - source: mail_to
+              target: /run/config/mail_to
+        secrets:
+            - sendgrid_api_key
+
+secrets:
+    influxdb_token:
+        external: true
+    sendgrid_api_key:
+        external: true
+
+configs:
+    influxdb_url:
+        external: true
+    influxdb_org:
+        external: true
+    influxdb_bucket:
+        external: true
+    plug_host:
+        external: true
+    mail_from:
+        external: true
+    mail_to:
+        external: true

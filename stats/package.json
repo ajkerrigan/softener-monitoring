@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@influxdata/influx": "^0.5.5",
+    "@influxdata/influxdb-client": "^1.2.0",
+    "docker-swarm-secrets": "^1.0.0",
+    "influx": "^5.0.0-alpha.4",
+    "tplink-smarthome-api": "^2.0.0",
+    "xhr2": "^0.2.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
