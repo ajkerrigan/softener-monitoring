@@ -25,7 +25,7 @@ def notify():
                 subject='Softener Status',
                 text=f'Softener status is: {status}\n\nDetail:\n\n{json.dumps(request.json, indent=4)}'
             )
-            return request.json
+            return jsonify(request.json)
         except Exception as err:
             print(err)
     else:
