@@ -2,13 +2,13 @@ version: "3.3"
 services:
 
     influxdb:
-        image: quay.io/influxdb/influxdb:2.0.0-beta
+        image: quay.io/influxdb/influxdb:2.0.0-rc
         deploy:
             replicas: 1
         volumes:
             - /volume1/influxdb/.influxdbv2:/root/.influxdbv2
         ports:
-            - target: 9999
+            - target: 8086
               published: 9999
               mode: host
 
